@@ -1,0 +1,100 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Extended user information",
+      "type": "object",
+      "properties": {
+        "displayName": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["displayName", "email"]
+    },
+    "Expense": {
+      "title": "Expense",
+      "description": "A single financial transaction",
+      "type": "object",
+      "properties": {
+        "amount": { "type": "number" },
+        "category": { "type": "string", "enum": ["Food", "Transport", "Shopping", "Entertainment", "Bills", "Other"] },
+        "description": { "type": "string" },
+        "date": { "type": "string", "format": "date-time" },
+        "userId": { "type": "string" }
+      },
+      "required": ["amount", "category", "description", "date", "userId"]
+    },
+    "Budget": {
+      "title": "Budget",
+      "description": "Monthly limit for a specific category",
+      "type": "object",
+      "properties": {
+        "category": { "type": "string" },
+        "amount": { "type": "number" },
+        "userId": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["category", "amount", "userId"]
+    },
+    "SavingsGoal": {
+      "title": "Savings Goal",
+      "description": "User's monthly income and target savings goal",
+      "type": "object",
+      "properties": {
+        "monthlyIncome": { "type": "number" },
+        "targetSavings": { "type": "number" },
+        "userId": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["monthlyIncome", "targetSavings", "userId"]
+    },
+    "Alert": {
+      "title": "Alert",
+      "description": "Financial anomaly alert",
+      "type": "object",
+      "properties": {
+        "message": { "type": "string" },
+        "type": { "type": "string", "enum": ["info", "warning", "error"] },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["message", "type", "timestamp"]
+    },
+    "Preferences": {
+      "title": "Preferences",
+      "description": "User notification preferences",
+      "type": "object",
+      "properties": {
+        "pushEnabled": { "type": "boolean" },
+        "emailEnabled": { "type": "boolean" }
+      }
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile data"
+    },
+    "/expenses/{expenseId}": {
+      "schema": "Expense",
+      "description": "Global collection of expenses"
+    },
+    "/budgets/{budgetId}": {
+      "schema": "Budget",
+      "description": "Category-wise budget limits"
+    },
+    "/savingsGoals/{goalId}": {
+      "schema": "SavingsGoal",
+      "description": "User savings goals"
+    },
+    "/alerts/{alertId}": {
+      "schema": "Alert",
+      "description": "Historical spend alerts"
+    },
+    "/preferences/{userId}": {
+      "schema": "Preferences",
+      "description": "User notification settings"
+    }
+  }
+}
